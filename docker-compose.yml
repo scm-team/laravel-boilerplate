@@ -1,10 +1,11 @@
 version: '3.8'
 
 networks:
-  sample:
+  laravel_docker_sample:
 
 services:
   nginx:
+    container_name: sample_nginx
     build:
       context: .
       dockerfile: ./.docker/nginx/Dockerfile
@@ -14,25 +15,25 @@ services:
     ports:
       - "8080:80"
       - "443:443"
-    container_name: sample_nginx
     networks:
-      - sample
+      - laravel_docker_sample
     depends_on:
       - php
     
   php:
+    container_name: sample_php
     build:
       context: .
       dockerfile: ./.docker/php/Dockerfile
     volumes: 
       - ./:/var/www/html
-    container_name: sample_php
     networks:
-      - sample
+      - laravel_docker_sample
     depends_on:
       - mysql
 
   mysql:
+    container_name: sample_mysql
     image: mysql
     tty: true
     volumes:
@@ -44,6 +45,24 @@ services:
       MYSQL_USER: sample_user
       MYSQL_PASSWORD: root
       MYSQL_ROOT_PASSWORD: root
-    container_name: sample_mysql
     networks:
-      - sample
+      - laravel_docker_sample
+  
+  # redis:
+  #   container_name: sample_redis
+  #   image: "redis"
+  #   ports:
+  #     - "6379:6379"
+  #   volumes:
+  #     - "./docker/redis:/data"
+  #   networks:
+  #     - laravel_docker_sample
+
+  # node:
+  #   container_name: sample_node
+  #   build: ./.docker/node
+  #   tty: true
+  #   volumes:
+  #     - ./:/var/www/html/app
+  #   networks:
+  #     - laravel_docker_sample

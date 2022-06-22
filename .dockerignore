@@ -1,0 +1,5 @@
+.git
+.vscode
+.docker
+!/.docker/nginx/default.conf
+!/.docker/php/php.ini

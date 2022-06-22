@@ -1,13 +1,9 @@
-FROM php:8.1-fpm-buster
+FROM php:8.1-fpm
 
 # PHP config
 COPY ./.docker/php/php.ini /usr/local/etc/php/conf.d/php.ini
 # install composer
-RUN set -x \
-   && php -r "copy('https://getcomposer.org/installer', '/tmp/composer-setup.php');" \
-   && php -r "if (hash_file('SHA384', '/tmp/composer-setup.php') !== trim(file_get_contents('https://composer.github.io/installer.sig'))) { echo 'ERROR: Invalid installer signature' . PHP_EOL; unlink('/tmp/composer-setup.php'); exit(1); }" \
-   && php /tmp/composer-setup.php --version=2.1.3 --install-dir=/usr/local/bin --filename=composer  \
-   && rm -rf /tmp/composer-setup.php
+COPY --from=composer:2.1.3 /usr/bin/composer /usr/bin/composer
 
 RUN apt-get update \
     && apt-get install -y \
