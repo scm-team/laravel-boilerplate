@@ -1,3 +1,3 @@
-FROM node:15
+FROM node:latest
 
 WORKDIR /var/www/html/app

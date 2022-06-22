@@ -58,11 +58,11 @@ services:
   #   networks:
   #     - laravel_docker_sample
 
-  # node:
-  #   container_name: sample_node
-  #   build: ./.docker/node
-  #   tty: true
-  #   volumes:
-  #     - ./:/var/www/html/app
-  #   networks:
-  #     - laravel_docker_sample
+  node:
+    container_name: sample_node
+    build: ./.docker/node
+    tty: true
+    volumes:
+      - ./:/var/www/html/app
+    networks:
+      - laravel_docker_sample

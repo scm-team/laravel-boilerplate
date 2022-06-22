@@ -21,9 +21,6 @@ RUN apt-get update \
     unzip \
     vim \
     nano \
-    # install nodejs and npm
-    && curl -sL https://deb.nodesource.com/setup_15.x | bash - \
-    && apt-get install -y nodejs \
     # install yarn
     && apt-get install -y yarn \
     && apt-get install -y libpq-dev \

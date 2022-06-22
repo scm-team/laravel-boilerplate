@@ -14,10 +14,16 @@ Install dependencies. run below command one by one.
 ```bash
 docker-compose exec php bash
 composer install
-npm install && npm run dev
 cp .env.example .env
 php artisan key:generate
 ```
+
+Install Node dependencies. run below command.
+```bash
+docker-compose exec node bash
+npm install && npm run dev
+```
+
 
 ## Development workflow
 
@@ -46,7 +52,7 @@ docker-compose exec php composer ...
 
 For `npm`
 ```bash
-docker-compose exec php npm ...
+docker-compose exec node npm...
 ```
 
 To verify container running status:
