@@ -4,12 +4,18 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
+use App\Interfaces\Services\Auth\LoginServiceInterface;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
 class AuthenticatedSessionController extends Controller
 {
+    private $loginService;
+
+    public function __construct(LoginServiceInterface $loginService)
+    {
+        $this->loginService = $loginService;
+    }
     /**
      * Display the login view.
      *
@@ -28,9 +34,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request)
     {
-        $request->authenticate();
-
-        $request->session()->regenerate();
+        $this->loginService->store($request);
 
         return redirect()->intended(RouteServiceProvider::HOME);
     }
@@ -43,11 +47,7 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request)
     {
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
+        $this->loginService->destroy($request);
 
         return redirect('/');
     }
